@@ -1,0 +1,170 @@
+package searchengine;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class SearchEngineSurvey {
+    private List<Respondent> respondents;
+    private String surveyTitle;
+    private String surveyGoal;
+
+    public SearchEngineSurvey(String surveyTitle, String surveyGoal) {
+        this.surveyTitle = surveyTitle;
+        this.surveyGoal = surveyGoal;
+        this.respondents = new ArrayList<>();
+    }
+
+    public void addRespondent(Respondent respondent) {
+        respondents.add(respondent);
+    }
+
+    public void conductSurvey() {
+        System.out.println("Survey Title: " + surveyTitle);
+        System.out.println("Survey Goal: " + surveyGoal);
+        System.out.println("Conducting survey...");
+
+        for (Respondent respondent : respondents) {
+            System.out.println("Respondent ID: " + respondent.getRespondentId());
+            System.out.println("Name: " + respondent.getName());
+            System.out.println("Age: " + respondent.getAge());
+            System.out.println("Gender: " + respondent.getGender());
+
+            // Menilai pengalaman pengguna
+            assessUserExperience(respondent);
+
+            System.out.println();
+        }
+
+        System.out.println("Survey completed successfully!");
+    }
+
+    private void assessUserExperience(Respondent respondent) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Pertanyaan 1
+        System.out.println("Q1: How satisfied are you with the search results?");
+        String q1Response = scanner.nextLine();
+        respondent.addAnswer("Q1", q1Response);
+
+        // Pertanyaan 2
+        System.out.println("Q2: Did you find the search interface user-friendly?");
+        String q2Response = scanner.nextLine();
+        respondent.addAnswer("Q2", q2Response);
+
+        // Pertanyaan 3 (Tambahan)
+        System.out.println("Q3: Would you recommend this search engine to others?");
+        String q3Response = scanner.nextLine();
+        respondent.addAnswer("Q3", q3Response);
+
+        // Logika penilaian tambahan sesuai kebutuhan survei
+    }
+
+	public Respondent[] getRespondents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
+
+class Respondent {
+    private int respondentId;
+    private String name;
+    private String age;
+    private String gender;
+    private String purchaseIntentSentence;
+    private List<Answer> answers;
+
+    public Respondent(int respondentId, String name, String age, String gender) {
+        this.respondentId = respondentId;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.answers = new ArrayList<>();
+    }
+
+    public int getRespondentId() {
+        return respondentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getPurchaseIntentSentence() {
+        return purchaseIntentSentence;
+    }
+
+    public void setPurchaseIntentSentence(String purchaseIntentSentence) {
+        this.purchaseIntentSentence = purchaseIntentSentence;
+    }
+
+    public void addAnswer(String question, String response) {
+        answers.add(new Answer(question, response));
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+}
+
+class Answer {
+    private String question;
+    private String response;
+
+    public Answer(String question, String response) {
+        this.question = question;
+        this.response = response;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+}
+
+public class codingan {
+    public static void main(String[] args) {
+        // Inisiasi survei
+        SearchEngineSurvey searchEngineSurvey = new SearchEngineSurvey(
+                "User Experience Survey on E-Marketplace",
+                "Evaluate user satisfaction with the search engine on the E-Marketplace"
+        );
+
+        // Menambahkan responden
+        searchEngineSurvey.addRespondent(new Respondent(1, "John Doe", "25", "Female"));
+        searchEngineSurvey.addRespondent(new Respondent(2, "Jane Smith", "30", "Male"));
+
+        // Melakukan survei
+        searchEngineSurvey.conductSurvey();
+
+        // Menampilkan jawaban dari responden
+        displayAnswers(searchEngineSurvey);
+    }
+
+    private static void displayAnswers(SearchEngineSurvey survey) {
+        System.out.println("\nResponses from Respondents:");
+
+        for (Respondent respondent : survey.getRespondents()) {
+            System.out.println("\nRespondent ID: " + respondent.getRespondentId());
+            System.out.println("Name: " + respondent.getName());
+            System.out.println("Age: " + respondent.getAge());
+            System.out.println("Gender: " + respondent.getGender());
+
+            System.out.println("Survey Answers:");
+            for (Answer answer : respondent.getAnswers()) {
+                System.out.println(answer.getQuestion() + ": " + answer.getResponse());
+            }
+        }
+    }
+}
